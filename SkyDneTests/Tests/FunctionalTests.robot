@@ -10,7 +10,7 @@ ${base_url}     https://gorest.co.in/
 *** Test Cases ***
 
 Verify response has Pagination
-    create session      session1    ${endpoint}     set variable    ${base_url}     disable_warnings=1
+    create session      session1  ${base_url}     disable_warnings=1
     ${endpoint}     set variable    /public/v2/users
     ${response}=     get on session      session1        ${endpoint}
     log to console  ${response.headers}
@@ -25,4 +25,14 @@ Verify response has Pagination
     #Check if response header has Pagination Value
     ${header_value}=    get from dictionary     ${response.headers}     X-Pagination-Page
     should not be empty     ${header_value}
+
+Verify valid json data
+    create session      session1  ${base_url}     disable_warnings=1
+    ${endpoint}     set variable    /public/v2/users
+    ${response}=     get on session      session1        ${endpoint}
+    log to console  ${response.headers}
+    log     ${response.headers}
+
+    ${header_value}=    get from dictionary     ${response.headers}     Content-Type
+    should contain      ${header_value}     json
 
