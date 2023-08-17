@@ -2,7 +2,14 @@
 Documentation  To cover the functional test scenarios for APIS in https://gorest.co.in/
 
 Library     RequestsLibrary
-
+Library     Collections
+Library     String
+Library     JSONLibrary
+Library     RequestsLibrary
+Library     OperatingSystem
+Library     jsonschema
+Library     JsonValidator
+Library     os
 *** Variables ***
 
 ${base_url}     https://gorest.co.in/
@@ -36,3 +43,16 @@ Verify valid json data
     ${header_value}=    get from dictionary     ${response.headers}     Content-Type
     should contain      ${header_value}     json
 
+Verify response data has email address
+    create session      session1  ${base_url}     disable_warnings=1
+    ${endpoint}     set variable    /public/v2/users
+    ${response}=     get on session      session1        ${endpoint}
+
+    #Converting output to Json for extracting email
+    ${json_response}=       set variable    ${base_url}     disable_warnings=1
+    #log to console     {$json_response}
+    ${email_data}=      get value from json     {json_response}     $[0].email
+    log to console      ${email_data}
+
+    #Validation to check if the email data is present
+    should not be empty     ${email_data}
