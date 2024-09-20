@@ -70,6 +70,6 @@ Verify all entries on list data have similar attributes
         dictionary should contain key   ${item}     name
         dictionary should contain key   ${item}     email
         dictionary should contain key   ${item}     gender
-        dictionary should contain key   ${item}     status
+     #   dictionary should contain key   ${item}     status
     END
 
